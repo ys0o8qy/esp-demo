@@ -1,27 +1,26 @@
-#include <Arduino.h>
+#include <WiFi.h>
 
-// put function declarations here:
-int myFunction(int, int);
+// Replace with your network credentials
+const char *ssid = "ESP32-Access-Point";
+const char *password = "123456";
+
+// Set web server port number to 80
+WiFiServer server(80);
 
 void setup()
 {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-  Serial.begin(115200);
+  Serial.begin(96000);
+
+  // Connect to Wi-Fi network with SSID and password
+  Serial.print("Setting AP (Access Point)…");
+  // Remove the password parameter, if you want the AP (Access Point) to be open
+  WiFi.softAP(ssid);
+
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(IP);
+
+  server.begin();
 }
 
-void loop()
-{
-  // put your main code here, to run repeatedly:
-  while (true)
-  {
-    Serial.println("Serial.println");
-    delay(1000);
-  }
-}
-
-// put function definitions here:
-int myFunction(int x, int y)
-{
-  return x + y;
-}
+void loop() {}
